@@ -779,7 +779,7 @@ call_getter:
 			zend_throw_error(NULL, "Typed property %s::$%s must not be accessed before initialization",
 				ZSTR_VAL(prop_info->ce->name),
 				ZSTR_VAL(name));
-		} else if ( zobj->ce->ce_flags & ZEND_ACC_FINAL ) {
+		} else if ( zobj->ce->ce_flags & ZEND_ACC_LOCKED ) {
 			zend_throw_error(NULL, "Cannot access undefined property $%s on locked class %s", ZSTR_VAL(name), ZSTR_VAL(zobj->ce->name));
 		} else {
 			zend_error(E_NOTICE,"Undefined property: %s::$%s", ZSTR_VAL(zobj->ce->name), ZSTR_VAL(name));
@@ -885,7 +885,7 @@ write_std_property:
 
 			ZVAL_COPY_VALUE(variable_ptr, value);
 		} else {
-			if ( zobj->ce->ce_flags & ZEND_ACC_FINAL ) {
+			if ( zobj->ce->ce_flags & ZEND_ACC_LOCKED ) {
 				zend_throw_error(NULL, "Cannot write undefined property $%s on locked class %s", ZSTR_VAL(name), ZSTR_VAL(zobj->ce->name));
 				variable_ptr = &EG(error_zval);
 				goto exit;
