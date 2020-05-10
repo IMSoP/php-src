@@ -2015,6 +2015,7 @@ timelib_time *timelib_parse_from_format_with_map(char *format, char *string, siz
 	Scanner     *s = &in;
 	bool         allow_extra = false;
 	bool         prefix_found = false;
+	bool         need_to_normalise = false;
 	int          iso_year = TIMELIB_UNSET;
 	int          iso_week_of_year = TIMELIB_UNSET;
 	int          iso_day_of_week = TIMELIB_UNSET;
@@ -2112,7 +2113,7 @@ timelib_time *timelib_parse_from_format_with_map(char *format, char *string, siz
 				} else {
 					s->time->m = 1;
 					s->time->d = tmp + 1;
-					timelib_do_normalize(s->time);
+					need_to_normalise = true;
 				}
 				break;
 
@@ -2387,6 +2388,11 @@ timelib_time *timelib_parse_from_format_with_map(char *format, char *string, siz
 		if (s->time->us == TIMELIB_UNSET ) {
 			s->time->us = 0;
 		}
+	}
+
+	/* If we set day-of-year, the date will be denormalised */
+	if ( need_to_normalise ) {
+		timelib_do_normalize(s->time);
 	}
 
 	/* Check for mixing of ISO dates with natural dates. */
