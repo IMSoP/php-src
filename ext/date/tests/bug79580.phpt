@@ -11,8 +11,15 @@ echo DateTimeImmutable::createFromFormat("z Y", '58 2020')->format('z: Y-m-d'), 
 echo DateTimeImmutable::createFromFormat("z Y", '59 2020')->format('z: Y-m-d'), "\n";
 echo DateTimeImmutable::createFromFormat("z Y", '60 2020')->format('z: Y-m-d'), "\n";
 echo "Mixing month and day-of-year:\n";
-echo DateTimeImmutable::createFromFormat("z m Y", '58 3 2019')->format('z: Y-m-d'), "\n";
-
+var_dump( DateTimeImmutable::createFromFormat("z m Y", '58 3 2019') );
+print_r(DateTime::getLastErrors());
+var_dump( DateTimeImmutable::createFromFormat("m z Y", '3 58 2019') );
+print_r(DateTime::getLastErrors());
+echo "Mixing day-of-month and day-of-year:\n";
+var_dump( DateTimeImmutable::createFromFormat("z d Y", '58 3 2019') );
+print_r(DateTime::getLastErrors());
+var_dump( DateTimeImmutable::createFromFormat("d z Y", '3 58 2019') );
+print_r(DateTime::getLastErrors());
 ?>
 --EXPECT--
 Non-leap year:
@@ -24,4 +31,64 @@ Leap year:
 59: 2020-02-29
 60: 2020-03-01
 Mixing month and day-of-year:
-86: 2019-03-28
+bool(false)
+Array
+(
+    [warning_count] => 0
+    [warnings] => Array
+        (
+        )
+
+    [error_count] => 1
+    [errors] => Array
+        (
+            [9] => Mixing of day-of-year with month or day is not allowed
+        )
+
+)
+bool(false)
+Array
+(
+    [warning_count] => 0
+    [warnings] => Array
+        (
+        )
+
+    [error_count] => 1
+    [errors] => Array
+        (
+            [9] => Mixing of day-of-year with month or day is not allowed
+        )
+
+)
+Mixing day-of-month and day-of-year:
+bool(false)
+Array
+(
+    [warning_count] => 0
+    [warnings] => Array
+        (
+        )
+
+    [error_count] => 1
+    [errors] => Array
+        (
+            [9] => Mixing of day-of-year with month or day is not allowed
+        )
+
+)
+bool(false)
+Array
+(
+    [warning_count] => 0
+    [warnings] => Array
+        (
+        )
+
+    [error_count] => 1
+    [errors] => Array
+        (
+            [9] => Mixing of day-of-year with month or day is not allowed
+        )
+
+)
