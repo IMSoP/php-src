@@ -187,35 +187,6 @@ static void zend_ini_get_var(zval *result, zval *name)
 }
 /* }}} */
 
-/* {{{ ini_error()
-*/
-static ZEND_COLD void ini_error(const char *msg)
-{
-	char *error_buf;
-	int error_buf_len;
-	char *currently_parsed_filename;
-
-	currently_parsed_filename = zend_ini_scanner_get_filename();
-	if (currently_parsed_filename) {
-		error_buf_len = 128 + (int)strlen(msg) + (int)strlen(currently_parsed_filename); /* should be more than enough */
-		error_buf = (char *) emalloc(error_buf_len);
-
-		sprintf(error_buf, "%s in %s on line %d\n", msg, currently_parsed_filename, zend_ini_scanner_get_lineno());
-	} else {
-		error_buf = estrdup("Invalid configuration directive\n");
-	}
-
-	if (CG(ini_parser_unbuffered_errors)) {
-#ifdef ZEND_WIN32
-		syslog(LOG_ALERT, "PHP: %s (%s)", error_buf, GetCommandLine());
-#endif
-		fprintf(stderr, "PHP:  %s", error_buf);
-	} else {
-		zend_error(E_WARNING, "%s", error_buf);
-	}
-	efree(error_buf);
-}
-/* }}} */
 
 /* {{{ zend_parse_ini_file()
 */
@@ -291,6 +262,7 @@ static void zval_ini_dtor(zval *zv)
 %define api.pure full
 %define api.value.type {zval}
 %define parse.error verbose
+%locations
 
 %token END 0 "end of file"
 %token TC_SECTION
@@ -421,3 +393,36 @@ constant_string:
 	|	TC_STRING						{ $$ = $1; /*printf("TC_STRING: '%s'\n", Z_STRVAL($1));*/ }
 	|	TC_WHITESPACE					{ $$ = $1; /*printf("TC_WHITESPACE: '%s'\n", Z_STRVAL($1));*/ }
 ;
+
+%%
+
+
+/* {{{ ini_error()
+*/
+ZEND_COLD void ini_error(INI_LTYPE *locp, const char *msg)
+{
+	char *error_buf;
+	int error_buf_len;
+	char *currently_parsed_filename;
+
+	currently_parsed_filename = zend_ini_scanner_get_filename();
+	if (currently_parsed_filename) {
+		error_buf_len = 128 + (int)strlen(msg) + (int)strlen(currently_parsed_filename); /* should be more than enough */
+		error_buf = (char *) emalloc(error_buf_len);
+
+		sprintf(error_buf, "%s in %s on line %d column %d\n", msg, currently_parsed_filename, locp->first_line, locp->first_column-1);
+	} else {
+		error_buf = estrdup("Invalid configuration directive\n");
+	}
+
+	if (CG(ini_parser_unbuffered_errors)) {
+#ifdef ZEND_WIN32
+		syslog(LOG_ALERT, "PHP: %s (%s)", error_buf, GetCommandLine());
+#endif
+		fprintf(stderr, "PHP:  %s", error_buf);
+	} else {
+		zend_error(E_WARNING, "%s", error_buf);
+	}
+	efree(error_buf);
+}
+/* }}} */

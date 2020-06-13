@@ -227,7 +227,6 @@ static int init_ini_scanner(int scanner_mode, zend_file_handle *fh)
 		return FAILURE;
 	}
 
-	SCNG(lineno) = 1;
 	SCNG(scanner_mode) = scanner_mode;
 	SCNG(yy_in) = fh;
 
@@ -252,14 +251,6 @@ void shutdown_ini_scanner(void)
 	if (ini_filename) {
 		free(ini_filename);
 	}
-}
-/* }}} */
-
-/* {{{ zend_ini_scanner_get_lineno()
-*/
-ZEND_COLD int zend_ini_scanner_get_lineno(void)
-{
-	return SCNG(lineno);
 }
 /* }}} */
 
@@ -311,7 +302,7 @@ int zend_ini_prepare_string_for_scanning(char *str, int scanner_mode)
 
 /* {{{ zend_ini_escape_string()
  */
-static void zend_ini_escape_string(zval *lval, char *str, int len, char quote_type)
+static void zend_ini_escape_string(zval *lval, char *str, int len, char quote_type, INI_LTYPE *yyloc)
 {
 	register char *s, *t;
 	char *end;
@@ -350,7 +341,8 @@ static void zend_ini_escape_string(zval *lval, char *str, int len, char quote_ty
 			*t++ = *s;
 		}
 		if (*s == '\n' || (*s == '\r' && (*(s+1) != '\n'))) {
-			SCNG(lineno)++;
+			yyloc->last_line++;
+			yyloc->last_column=1;
 		}
 		s++;
 	}
@@ -358,7 +350,7 @@ static void zend_ini_escape_string(zval *lval, char *str, int len, char quote_ty
 }
 /* }}} */
 
-int ini_lex(zval *ini_lval)
+int ini_lex(zval *ini_lval, INI_LTYPE *yyloc)
 {
 restart:
 	SCNG(yy_text) = YYCURSOR;
@@ -403,7 +395,12 @@ LITERAL_DOLLAR ("$"([^{\000]|("\\"{ANY_CHAR})))
 VALUE_CHARS         ([^$= \t\n\r;&|^~()!"'\000]|{LITERAL_DOLLAR})
 SECTION_VALUE_CHARS ([^$\n\r;"'\]\\]|("\\"{ANY_CHAR})|{LITERAL_DOLLAR})
 
-<!*> := yyleng = YYCURSOR - SCNG(yy_text);
+<!*> {
+	yyleng = YYCURSOR - SCNG(yy_text);
+	yyloc->first_line = yyloc->last_line;
+	yyloc->first_column = yyloc->last_column;
+	yyloc->last_column += yyleng;
+}
 
 <INITIAL>"[" { /* Section start */
 	/* Enter section data lookup state */
@@ -426,7 +423,8 @@ SECTION_VALUE_CHARS ([^$\n\r;"'\]\\]|("\\"{ANY_CHAR})|{LITERAL_DOLLAR})
 
 <ST_SECTION_RAW,ST_SECTION_VALUE>"]"{TABS_AND_SPACES}*{NEWLINE}? { /* End of section */
 	BEGIN(INITIAL);
-	SCNG(lineno)++;
+	yyloc->last_line++;
+	yyloc->last_column=1;
 	return ']';
 }
 
@@ -549,7 +547,8 @@ end_raw_value_chars:
 
 <ST_VALUE,ST_RAW>{TABS_AND_SPACES}*{NEWLINE} { /* End of option value */
 	BEGIN(INITIAL);
-	SCNG(lineno)++;
+	yyloc->last_line++;
+	yyloc->last_column=1;
 	return END_OF_LINE;
 }
 
@@ -625,7 +624,7 @@ end_raw_value_chars:
 
 	yyleng = YYCURSOR - SCNG(yy_text);
 
-	zend_ini_escape_string(ini_lval, yytext, yyleng, '"');
+	zend_ini_escape_string(ini_lval, yytext, yyleng, '"', yyloc);
 	return TC_QUOTED_STRING;
 }
 
@@ -639,13 +638,15 @@ end_raw_value_chars:
 }
 
 <INITIAL>{TABS_AND_SPACES}*{NEWLINE} {
-	SCNG(lineno)++;
+	yyloc->last_line++;
+	yyloc->last_column=1;
 	return END_OF_LINE;
 }
 
 <INITIAL,ST_VALUE,ST_RAW>{TABS_AND_SPACES}*[;][^\r\n]*{NEWLINE} { /* Comment */
 	BEGIN(INITIAL);
-	SCNG(lineno)++;
+	yyloc->last_line++;
+	yyloc->last_column=1;
 	return END_OF_LINE;
 }
 
