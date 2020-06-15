@@ -1778,7 +1778,7 @@ ZEND_API void zend_activate_auto_globals(void) /* {{{ */
 }
 /* }}} */
 
-int ZEND_FASTCALL zendlex(zend_parser_stack_elem *elem) /* {{{ */
+int ZEND_FASTCALL zendlex(zend_parser_stack_elem *elem, ZENDLTYPE *yyloc) /* {{{ */
 {
 	zval zv;
 	int ret;
@@ -1788,7 +1788,7 @@ int ZEND_FASTCALL zendlex(zend_parser_stack_elem *elem) /* {{{ */
 		CG(increment_lineno) = 0;
 	}
 
-	ret = lex_scan(&zv, elem);
+	ret = lex_scan(&zv, elem, yyloc);
 	ZEND_ASSERT(!EG(exception) || ret == T_ERROR);
 	return ret;
 

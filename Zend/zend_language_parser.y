@@ -46,6 +46,7 @@ static YYSIZE_T zend_yytnamerr(char*, const char*);
 %define api.pure full
 %define api.value.type {zend_parser_stack_elem}
 %define parse.error verbose
+%locations
 %expect 0
 
 %destructor { zend_ast_destroy($$); } <ast>
@@ -1495,4 +1496,18 @@ static YYSIZE_T zend_yytnamerr(char *yyres, const char *yystr)
 	}
 	yystpcpy(yyres, yystr);
 	return strlen(yystr);
+}
+
+ZEND_COLD void zenderror(ZENDLTYPE *locp, const char *error)
+{
+	CG(parse_error) = 0;
+
+	if (EG(exception)) {
+		/* An exception was thrown in the lexer, don't throw another in the parser. */
+		return;
+	}
+
+	printf("Error token: %d:%d -> %d:%d\n", locp->first_line, locp->first_column, locp->last_line, locp->last_column);
+
+	zend_throw_exception(zend_ce_parse_error, error, 0);
 }

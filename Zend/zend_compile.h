@@ -130,6 +130,9 @@ typedef union _zend_parser_stack_elem {
 	zend_lexer_ident_ref ident;
 } zend_parser_stack_elem;
 
+/* Token-location struct defined automatically by bison */
+typedef struct ZENDLTYPE ZENDLTYPE;
+
 void zend_compile_top_stmt(zend_ast *ast);
 void zend_compile_stmt(zend_ast *ast);
 void zend_compile_expr(znode *node, zend_ast *ast);
@@ -724,7 +727,7 @@ void zend_file_context_end(zend_file_context *prev_context);
 extern ZEND_API zend_op_array *(*zend_compile_file)(zend_file_handle *file_handle, int type);
 extern ZEND_API zend_op_array *(*zend_compile_string)(zval *source_string, const char *filename);
 
-ZEND_API int ZEND_FASTCALL lex_scan(zval *zendlval, zend_parser_stack_elem *elem);
+ZEND_API int ZEND_FASTCALL lex_scan(zval *zendlval, zend_parser_stack_elem *elem, ZENDLTYPE *yyloc);
 void startup_scanner(void);
 void shutdown_scanner(void);
 
@@ -854,7 +857,8 @@ ZEND_API zend_bool zend_is_auto_global_str(const char *name, size_t len);
 ZEND_API size_t zend_dirname(char *path, size_t len);
 ZEND_API void zend_set_function_arg_flags(zend_function *func);
 
-int ZEND_FASTCALL zendlex(zend_parser_stack_elem *elem);
+int ZEND_FASTCALL zendlex(zend_parser_stack_elem *elem, ZENDLTYPE *yyloc);
+ZEND_COLD void zenderror(ZENDLTYPE *locp, const char *error);
 
 void zend_assert_valid_class_name(const zend_string *const_name);
 

@@ -370,7 +370,7 @@ static zend_bool tokenize(zval *return_value, zend_string *source, zend_class_en
 	zend_hash_init(&interned_strings, 0, NULL, NULL, 0);
 	array_init(return_value);
 
-	while ((token_type = lex_scan(&token, NULL))) {
+	while ((token_type = lex_scan(&token, NULL, NULL))) {
 		ZEND_ASSERT(token_type != T_ERROR);
 
 		add_token(

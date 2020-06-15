@@ -1365,7 +1365,7 @@ static int check_nesting_at_end()
 		} \
 	} while (0)
 
-int ZEND_FASTCALL lex_scan(zval *zendlval, zend_parser_stack_elem *elem)
+int ZEND_FASTCALL lex_scan(zval *zendlval, zend_parser_stack_elem *elem, ZENDLTYPE *yyloc)
 {
 int token;
 int offset;
@@ -1389,8 +1389,30 @@ TOKENS [;:,.|^&+-/*=%!~$<>?@]
 ANY_CHAR [^]
 NEWLINE ("\r"|"\n"|"\r\n")
 
-/* compute yyleng before each rule */
-<!*> := yyleng = YYCURSOR - SCNG(yy_text);
+/* compute yyleng and token positions before each rule */
+<!*> {
+	yyleng = YYCURSOR - SCNG(yy_text);
+	printf("Offsets: %d -> %d (%d)\n", (long)SCNG(yy_text), (long)YYCURSOR, yyleng);
+	if ( yyloc != NULL ) {
+		/* Copy start location from end of previous token */
+		yyloc->first_line = yyloc->last_line;
+		yyloc->first_column = yyloc->last_column;
+		/* Copy ending line number out of the global (TODO: vice versa?) */
+		yyloc->last_line = CG(zend_lineno);
+		if ( yyloc->first_line < yyloc->last_line ) {
+			/* After a line break, reset column numbers */
+			yyloc->last_column = 1;
+			/* Seek backwards until we find the newline character */
+			while ( yyloc->last_column <= yyleng && yytext[ yyleng - yyloc->last_column ] != '\n' ) {
+				++yyloc->last_column;
+			}
+		}
+		else {
+			yyloc->last_column += yyleng;
+		}
+		printf("Processed token: %d:%d -> %d:%d (%d)\n", yyloc->first_line, yyloc->first_column, yyloc->last_line, yyloc->last_column, yyleng);
+	}
+}
 
 <ST_IN_SCRIPTING>"exit" {
 	RETURN_TOKEN_WITH_IDENT(T_EXIT);
@@ -2368,6 +2390,7 @@ inline_char_handler:
 			if (*YYCURSOR == '\'') {
 				YYCURSOR++;
 				yyleng = YYCURSOR - SCNG(yy_text);
+				yyloc->last_column += yyleng;
 
 				break;
 			} else if (*YYCURSOR++ == '\\' && YYCURSOR < YYLIMIT) {
@@ -2594,7 +2617,7 @@ skip_escape_conversion:
 			int retval;
 
 			ZVAL_UNDEF(&zv);
-			retval = lex_scan(&zv, NULL);
+			retval = lex_scan(&zv, NULL, NULL);
 			zval_ptr_dtor_nogc(&zv);
 
 			if (EG(exception)) {
