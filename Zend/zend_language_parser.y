@@ -91,139 +91,139 @@ static YYSIZE_T zend_yytnamerr(char*, const char*);
 %token <ast> T_STRING    "identifier"
 %token <ast> T_VARIABLE  "variable"
 %token <ast> T_INLINE_HTML
-%token <ast> T_ENCAPSED_AND_WHITESPACE  "quoted-string and whitespace"
-%token <ast> T_CONSTANT_ENCAPSED_STRING "quoted-string"
+%token <ast> T_ENCAPSED_AND_WHITESPACE  "quoted string and whitespace"
+%token <ast> T_CONSTANT_ENCAPSED_STRING "quoted string"
 %token <ast> T_STRING_VARNAME "variable name"
 %token <ast> T_NUM_STRING "number"
 
-%token <ident> T_INCLUDE       "include"
-%token <ident> T_INCLUDE_ONCE  "include_once"
-%token <ident> T_EVAL          "eval"
-%token <ident> T_REQUIRE       "require"
-%token <ident> T_REQUIRE_ONCE  "require_once"
-%token <ident> T_LOGICAL_OR    "or"
-%token <ident> T_LOGICAL_XOR   "xor"
-%token <ident> T_LOGICAL_AND   "and"
-%token <ident> T_PRINT         "print"
-%token <ident> T_YIELD         "yield"
-%token <ident> T_YIELD_FROM    "yield from"
-%token <ident> T_INSTANCEOF    "instanceof"
-%token <ident> T_NEW           "new"
-%token <ident> T_CLONE         "clone"
-%token <ident> T_EXIT          "exit"
-%token <ident> T_IF            "if"
-%token <ident> T_ELSEIF        "elseif"
-%token <ident> T_ELSE          "else"
-%token <ident> T_ENDIF         "endif"
-%token <ident> T_ECHO          "echo"
-%token <ident> T_DO            "do"
-%token <ident> T_WHILE         "while"
-%token <ident> T_ENDWHILE      "endwhile"
-%token <ident> T_FOR           "for"
-%token <ident> T_ENDFOR        "endfor"
-%token <ident> T_FOREACH       "foreach"
-%token <ident> T_ENDFOREACH    "endforeach"
-%token <ident> T_DECLARE       "declare"
-%token <ident> T_ENDDECLARE    "enddeclare"
-%token <ident> T_AS            "as"
-%token <ident> T_SWITCH        "switch"
-%token <ident> T_ENDSWITCH     "endswitch"
-%token <ident> T_CASE          "case"
-%token <ident> T_DEFAULT       "default"
-%token <ident> T_BREAK         "break"
-%token <ident> T_CONTINUE      "continue"
-%token <ident> T_GOTO          "goto"
-%token <ident> T_FUNCTION      "function"
-%token <ident> T_FN            "fn"
-%token <ident> T_CONST         "const"
-%token <ident> T_RETURN        "return"
-%token <ident> T_TRY           "try"
-%token <ident> T_CATCH         "catch"
-%token <ident> T_FINALLY       "finally"
-%token <ident> T_THROW         "throw"
-%token <ident> T_USE           "use"
-%token <ident> T_INSTEADOF     "insteadof"
-%token <ident> T_GLOBAL        "global"
-%token <ident> T_STATIC        "static"
-%token <ident> T_ABSTRACT      "abstract"
-%token <ident> T_FINAL         "final"
-%token <ident> T_PRIVATE       "private"
-%token <ident> T_PROTECTED     "protected"
-%token <ident> T_PUBLIC        "public"
-%token <ident> T_VAR           "var"
-%token <ident> T_UNSET         "unset"
-%token <ident> T_ISSET         "isset"
-%token <ident> T_EMPTY         "empty"
-%token <ident> T_HALT_COMPILER "__halt_compiler"
-%token <ident> T_CLASS         "class"
-%token <ident> T_TRAIT         "trait"
-%token <ident> T_INTERFACE     "interface"
-%token <ident> T_EXTENDS       "extends"
-%token <ident> T_IMPLEMENTS    "implements"
-%token <ident> T_NAMESPACE     "namespace"
-%token <ident> T_LIST            "list"
-%token <ident> T_ARRAY           "array"
-%token <ident> T_CALLABLE        "callable"
-%token <ident> T_LINE            "__LINE__"
-%token <ident> T_FILE            "__FILE__"
-%token <ident> T_DIR             "__DIR__"
-%token <ident> T_CLASS_C         "__CLASS__"
-%token <ident> T_TRAIT_C         "__TRAIT__"
-%token <ident> T_METHOD_C        "__METHOD__"
-%token <ident> T_FUNC_C          "__FUNCTION__"
-%token <ident> T_NS_C            "__NAMESPACE__"
+%token <ident> T_INCLUDE       "'include'"
+%token <ident> T_INCLUDE_ONCE  "'include_once'"
+%token <ident> T_EVAL          "'eval'"
+%token <ident> T_REQUIRE       "'require'"
+%token <ident> T_REQUIRE_ONCE  "'require_once'"
+%token <ident> T_LOGICAL_OR    "'or'"
+%token <ident> T_LOGICAL_XOR   "'xor'"
+%token <ident> T_LOGICAL_AND   "'and'"
+%token <ident> T_PRINT         "'print'"
+%token <ident> T_YIELD         "'yield'"
+%token <ident> T_YIELD_FROM    "'yield from'"
+%token <ident> T_INSTANCEOF    "'instanceof'"
+%token <ident> T_NEW           "'new'"
+%token <ident> T_CLONE         "'clone'"
+%token <ident> T_EXIT          "'exit'"
+%token <ident> T_IF            "'if'"
+%token <ident> T_ELSEIF        "'elseif'"
+%token <ident> T_ELSE          "'else'"
+%token <ident> T_ENDIF         "'endif'"
+%token <ident> T_ECHO          "'echo'"
+%token <ident> T_DO            "'do'"
+%token <ident> T_WHILE         "'while'"
+%token <ident> T_ENDWHILE      "'endwhile'"
+%token <ident> T_FOR           "'for'"
+%token <ident> T_ENDFOR        "'endfor'"
+%token <ident> T_FOREACH       "'foreach'"
+%token <ident> T_ENDFOREACH    "'endforeach'"
+%token <ident> T_DECLARE       "'declare'"
+%token <ident> T_ENDDECLARE    "'enddeclare'"
+%token <ident> T_AS            "'as'"
+%token <ident> T_SWITCH        "'switch'"
+%token <ident> T_ENDSWITCH     "'endswitch'"
+%token <ident> T_CASE          "'case'"
+%token <ident> T_DEFAULT       "'default'"
+%token <ident> T_BREAK         "'break'"
+%token <ident> T_CONTINUE      "'continue'"
+%token <ident> T_GOTO          "'goto'"
+%token <ident> T_FUNCTION      "'function'"
+%token <ident> T_FN            "'fn'"
+%token <ident> T_CONST         "'const'"
+%token <ident> T_RETURN        "'return'"
+%token <ident> T_TRY           "'try'"
+%token <ident> T_CATCH         "'catch'"
+%token <ident> T_FINALLY       "'finally'"
+%token <ident> T_THROW         "'throw'"
+%token <ident> T_USE           "'use'"
+%token <ident> T_INSTEADOF     "'insteadof'"
+%token <ident> T_GLOBAL        "'global'"
+%token <ident> T_STATIC        "'static'"
+%token <ident> T_ABSTRACT      "'abstract'"
+%token <ident> T_FINAL         "'final'"
+%token <ident> T_PRIVATE       "'private'"
+%token <ident> T_PROTECTED     "'protected'"
+%token <ident> T_PUBLIC        "'public'"
+%token <ident> T_VAR           "'var'"
+%token <ident> T_UNSET         "'unset'"
+%token <ident> T_ISSET         "'isset'"
+%token <ident> T_EMPTY         "'empty'"
+%token <ident> T_HALT_COMPILER "'__halt_compiler'"
+%token <ident> T_CLASS         "'class'"
+%token <ident> T_TRAIT         "'trait'"
+%token <ident> T_INTERFACE     "'interface'"
+%token <ident> T_EXTENDS       "'extends'"
+%token <ident> T_IMPLEMENTS    "'implements'"
+%token <ident> T_NAMESPACE     "'namespace'"
+%token <ident> T_LIST            "'list'"
+%token <ident> T_ARRAY           "'array'"
+%token <ident> T_CALLABLE        "'callable'"
+%token <ident> T_LINE            "'__LINE__'"
+%token <ident> T_FILE            "'__FILE__'"
+%token <ident> T_DIR             "'__DIR__'"
+%token <ident> T_CLASS_C         "'__CLASS__'"
+%token <ident> T_TRAIT_C         "'__TRAIT__'"
+%token <ident> T_METHOD_C        "'__METHOD__'"
+%token <ident> T_FUNC_C          "'__FUNCTION__'"
+%token <ident> T_NS_C            "'__NAMESPACE__'"
 
 %token END 0 "end of file"
-%token T_PLUS_EQUAL   "+="
-%token T_MINUS_EQUAL  "-="
-%token T_MUL_EQUAL    "*="
-%token T_DIV_EQUAL    "/="
-%token T_CONCAT_EQUAL ".="
-%token T_MOD_EQUAL    "%="
-%token T_AND_EQUAL    "&="
-%token T_OR_EQUAL     "|="
-%token T_XOR_EQUAL    "^="
-%token T_SL_EQUAL     "<<="
-%token T_SR_EQUAL     ">>="
-%token T_COALESCE_EQUAL "??="
-%token T_BOOLEAN_OR   "||"
-%token T_BOOLEAN_AND  "&&"
-%token T_IS_EQUAL     "=="
-%token T_IS_NOT_EQUAL "!="
-%token T_IS_IDENTICAL "==="
-%token T_IS_NOT_IDENTICAL "!=="
-%token T_IS_SMALLER_OR_EQUAL "<="
-%token T_IS_GREATER_OR_EQUAL ">="
-%token T_SPACESHIP "<=>"
-%token T_SL "<<"
-%token T_SR ">>"
-%token T_INC "++"
-%token T_DEC "--"
-%token T_INT_CAST    "int cast"
-%token T_DOUBLE_CAST "double cast"
-%token T_STRING_CAST "string cast"
-%token T_ARRAY_CAST  "array cast"
-%token T_OBJECT_CAST "object cast"
-%token T_BOOL_CAST   "bool cast"
-%token T_UNSET_CAST  "unset cast"
-%token T_OBJECT_OPERATOR "->"
-%token T_DOUBLE_ARROW    "=>"
+%token T_PLUS_EQUAL   "'+='"
+%token T_MINUS_EQUAL  "'-='"
+%token T_MUL_EQUAL    "'*='"
+%token T_DIV_EQUAL    "'/='"
+%token T_CONCAT_EQUAL "'.='"
+%token T_MOD_EQUAL    "'%='"
+%token T_AND_EQUAL    "'&='"
+%token T_OR_EQUAL     "'|='"
+%token T_XOR_EQUAL    "'^='"
+%token T_SL_EQUAL     "'<<='"
+%token T_SR_EQUAL     "'>>='"
+%token T_COALESCE_EQUAL "'??='"
+%token T_BOOLEAN_OR   "'||'"
+%token T_BOOLEAN_AND  "'&&'"
+%token T_IS_EQUAL     "'=='"
+%token T_IS_NOT_EQUAL "'!='"
+%token T_IS_IDENTICAL "'==='"
+%token T_IS_NOT_IDENTICAL "'!=='"
+%token T_IS_SMALLER_OR_EQUAL "'<='"
+%token T_IS_GREATER_OR_EQUAL "'>='"
+%token T_SPACESHIP "'<=>'"
+%token T_SL "'<<'"
+%token T_SR "'>>'"
+%token T_INC "'++'"
+%token T_DEC "'--'"
+%token T_INT_CAST    "'(int)'"
+%token T_DOUBLE_CAST "'(double)'"
+%token T_STRING_CAST "'(string)'"
+%token T_ARRAY_CAST  "'(array)'"
+%token T_OBJECT_CAST "'(object)'"
+%token T_BOOL_CAST   "'(bool)'"
+%token T_UNSET_CAST  "'(unset)'"
+%token T_OBJECT_OPERATOR "'->'"
+%token T_DOUBLE_ARROW    "'=>'"
 %token T_COMMENT         "comment"
 %token T_DOC_COMMENT     "doc comment"
 %token T_OPEN_TAG        "open tag"
-%token T_OPEN_TAG_WITH_ECHO "open tag with echo"
-%token T_CLOSE_TAG       "close tag"
+%token T_OPEN_TAG_WITH_ECHO "'<?='"
+%token T_CLOSE_TAG       "'?>'"
 %token T_WHITESPACE      "whitespace"
 %token T_START_HEREDOC   "heredoc start"
 %token T_END_HEREDOC     "heredoc end"
-%token T_DOLLAR_OPEN_CURLY_BRACES "${"
-%token T_CURLY_OPEN      "{$"
-%token T_PAAMAYIM_NEKUDOTAYIM "::"
-%token T_NS_SEPARATOR    "\\"
-%token T_ELLIPSIS        "..."
-%token T_COALESCE        "??"
-%token T_POW             "**"
-%token T_POW_EQUAL       "**="
+%token T_DOLLAR_OPEN_CURLY_BRACES "'${'"
+%token T_CURLY_OPEN      "'{$'"
+%token T_PAAMAYIM_NEKUDOTAYIM "'::'"
+%token T_NS_SEPARATOR    "'\\'"
+%token T_ELLIPSIS        "'...'"
+%token T_COALESCE        "'??'"
+%token T_POW             "'**'"
+%token T_POW_EQUAL       "'**='"
 %token T_BAD_CHARACTER   "invalid character"
 
 /* Token used to force a parse error from the lexer */
@@ -1414,13 +1414,11 @@ isset_variable:
 
 %%
 
-/* Copy to YYRES the contents of YYSTR after stripping away unnecessary
-   quotes and backslashes, so that it's suitable for yyerror.  The
-   heuristic is that double-quoting is unnecessary unless the string
-   contains an apostrophe, a comma, or backslash (other than
-   backslash-backslash).  YYSTR is taken from yytname.  If YYRES is
-   null, do not copy; instead, return the length of what the result
-   would have been.  */
+/* Over-ride Bison formatting routine to give better token descriptions.
+   Copy to YYRES the contents of YYSTR for use in yyerror.
+   YYSTR is taken from yytname, from the %token declaration.
+   If YYRES is null, do not copy; instead, return the length of what
+   the result would have been.  */
 static YYSIZE_T zend_yytnamerr(char *yyres, const char *yystr)
 {
 	/* CG(parse_error) states:
@@ -1436,8 +1434,9 @@ static YYSIZE_T zend_yytnamerr(char *yyres, const char *yystr)
 	if (CG(parse_error) % 2 == 0) {
 		/* The unexpected token */
 		char buffer[120];
-		const unsigned char *end, *str, *tok1 = NULL, *tok2 = NULL;
-		unsigned int len = 0, toklen = 0, yystr_len;
+		const char *toktype;
+		const unsigned char *tokcontent, *tokcontent_end;
+		unsigned int toktype_len, tokcontent_len;
 
 		CG(parse_error)++;
 
@@ -1450,35 +1449,68 @@ static YYSIZE_T zend_yytnamerr(char *yyres, const char *yystr)
 			return sizeof("end of file")-1;
 		}
 
-		str = LANG_SCNG(yy_text);
-		end = memchr(str, '\n', LANG_SCNG(yy_leng));
-		yystr_len = (unsigned int)strlen(yystr);
-
-		if ((tok1 = memchr(yystr, '(', yystr_len)) != NULL
-			&& (tok2 = zend_memrchr(yystr, ')', yystr_len)) != NULL) {
-			toklen = (tok2 - tok1) + 1;
-		} else {
-			tok1 = tok2 = NULL;
-			toklen = 0;
+		/* Prevent the backslash getting doubled in the output (eugh) */
+		if (strcmp(yystr, "\"'\\\\'\"") == 0) {
+			if (yyres) {
+				yystpcpy(yyres, "token '\\'");
+			}
+			return sizeof("token '\\'")-1;
 		}
 
-		if (end == NULL) {
-			len = LANG_SCNG(yy_leng) > 30 ? 30 : LANG_SCNG(yy_leng);
-		} else {
-			len = (end - str) > 30 ? 30 : (end - str);
+		toktype = yystr;
+		toktype_len = (unsigned int)strlen(yystr);
+
+		/* Strip off the outer quote marks */
+		if (*toktype == '"') {
+			toktype++;
+			toktype_len-=2;
 		}
+
+		/* If the token always has one form, the %token line should have a single-quoted name */
+		if (*toktype == '\'' ) {
+			if (yyres) {
+				snprintf(buffer, sizeof(buffer), "token %.*s", toktype_len, toktype);
+				yystpcpy(yyres, buffer);
+			}
+			return toktype_len + sizeof("token ")-1;
+		}
+
+		/* Fetch the content of the last seen token from global lexer state */
+		tokcontent = LANG_SCNG(yy_text);
+		tokcontent_end = memchr(tokcontent, '\n', LANG_SCNG(yy_leng));
+
+		if (tokcontent_end == NULL) {
+			tokcontent_len = LANG_SCNG(yy_leng) > 30 ? 30 : LANG_SCNG(yy_leng);
+		} else {
+			tokcontent_len = (tokcontent_end - tokcontent) > 30 ? 30 : (tokcontent_end - tokcontent);
+		}
+
 		if (yyres) {
-			if (toklen) {
-				snprintf(buffer, sizeof(buffer), "'%.*s' %.*s", len, str, toklen, tok1);
-			} else {
-				snprintf(buffer, sizeof(buffer), "'%.*s'", len, str);
+			/* If token is a quote string, don't quote it again, but force the end quote in case we truncated */
+			if (*tokcontent=='\'') {
+				snprintf(buffer, sizeof(buffer), "%.*s %.*s'", toktype_len, toktype, tokcontent_len-1, tokcontent);
+			}
+			else if (*tokcontent=='"') {
+				snprintf(buffer, sizeof(buffer), "%.*s %.*s\"", toktype_len, toktype, tokcontent_len-1, tokcontent);
+			}
+			else {
+				snprintf(buffer, sizeof(buffer), "%.*s '%.*s'", toktype_len, toktype, tokcontent_len, tokcontent);
 			}
 			yystpcpy(yyres, buffer);
 		}
-		return len + (toklen ? toklen + 1 : 0) + 2;
+		return toktype_len + tokcontent_len - (*tokcontent=='\'' || *tokcontent=='"' ? 1 : 0) + sizeof(" ''")-1;
 	}
 
 	/* One of the expected tokens */
+
+	/* Prevent the backslash getting doubled in the output (eugh) */
+	if (strcmp(yystr, "\"'\\\\'\"") == 0) {
+		if (yyres) {
+			yystpcpy(yyres, "'\\'");
+		}
+		return sizeof("'\\'")-1;
+	}
+
 	if (!yyres) {
 		return strlen(yystr) - (*yystr == '"' ? 2 : 0);
 	}
