@@ -377,6 +377,7 @@ ZEND_API void zend_restore_error_handling(zend_error_handling *saved);
 
 #define DEBUG_BACKTRACE_PROVIDE_OBJECT (1<<0)
 #define DEBUG_BACKTRACE_IGNORE_ARGS    (1<<1)
+#define DEBUG_BACKTRACE_APPEND         (1<<2)
 
 #include "zend_object_handlers.h"
 #include "zend_operators.h"

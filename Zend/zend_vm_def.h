@@ -2780,6 +2780,19 @@ ZEND_VM_HOT_HELPER(zend_leave_helper, ANY, ANY)
 		execute_data = EX(prev_execute_data);
 
 		if (UNEXPECTED(EG(exception) != NULL)) {
+
+do {
+    zval *trace, rv;
+    zend_class_entry *exception_base_ce;
+
+    exception_base_ce = zend_get_exception_base(EG(exception));
+    trace = zend_read_property_ex(exception_base_ce, EG(exception), ZSTR_KNOWN(ZEND_STR_TRACE), 1, &rv);
+
+    zend_fetch_debug_backtrace(trace, 0,
+        (EG(exception_ignore_args) ? DEBUG_BACKTRACE_IGNORE_ARGS : 0)|DEBUG_BACKTRACE_APPEND, 1);
+
+} while (0);
+
 			zend_rethrow_exception(execute_data);
 			HANDLE_EXCEPTION_LEAVE();
 		}

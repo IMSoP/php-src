@@ -1859,7 +1859,9 @@ ZEND_API void zend_fetch_debug_backtrace(zval *return_value, int skip_last, int 
 	zend_string *include_filename = NULL;
 	zval stack_frame, tmp;
 
-	array_init(return_value);
+	if ( ! (options & DEBUG_BACKTRACE_APPEND) ) {
+		array_init(return_value);
+	}
 
 	if (!(ptr = EG(current_execute_data))) {
 		return;
