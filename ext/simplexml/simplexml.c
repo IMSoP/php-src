@@ -942,7 +942,7 @@ static void _get_base_node_value(php_sxe_object *sxe_ref, xmlNodePtr node, zval 
 	php_sxe_object *subnode;
 	xmlChar        *contents;
 
-	if (node->children && node->children->type == XML_TEXT_NODE && !xmlIsBlankNode(node->children)) {
+	if (node->children && ( node->children->type == XML_TEXT_NODE || node->children->type == XML_CDATA_SECTION_NODE ) && !xmlIsBlankNode(node->children)) {
 		contents = xmlNodeListGetString(node->doc, node->children, 1);
 		if (contents) {
 			ZVAL_STRING(value, (char *)contents);
@@ -1161,7 +1161,7 @@ static HashTable *sxe_get_prop_hash(zend_object *object, int is_debug) /* {{{ */
 			if (node->children != NULL || node->prev != NULL || node->next != NULL || xmlIsBlankNode(node)) {
 				SKIP_TEXT(node);
 			} else {
-				if (node->type == XML_TEXT_NODE) {
+				if (node->type == XML_TEXT_NODE || node->type == XML_CDATA_SECTION_NODE) {
 					const xmlChar *cur = node->content;
 
 					if (*cur != 0) {
